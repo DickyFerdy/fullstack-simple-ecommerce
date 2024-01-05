@@ -1,0 +1,44 @@
+### Get user data
+GET http://localhost:3000/api/v1/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2MDgsInVzZXJuYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdEBtYWlsLmNvbSIsImlhdCI6MTcwMzc2NTMyNywiZXhwIjoxNzAzNzY1Mzg3fQ.nSmZoHwsSKONMuPjM1rIb-LNrhOTWBfJH6cu2A0L2Cg
+
+
+### User login
+POST http://localhost:3000/api/v1/login
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "rahasia"
+}
+
+
+### User register
+POST http://localhost:3000/api/v1/register
+Content-Type: application/json
+
+{
+  "name": "test",
+  "username": "test",
+  "email": "test@mail.com",
+  "password": "rahasia"
+}
+
+
+### User update
+PATCH http://localhost:3000/api/v1/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2MDgsInVzZXJuYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdEBtYWlsLmNvbSIsImlhdCI6MTcwMzc2NTMyNywiZXhwIjoxNzAzNzY1Mzg3fQ.nSmZoHwsSKONMuPjM1rIb-LNrhOTWBfJH6cu2A0L2Cg
+
+{
+  "email": "test2@mail.com"
+}
+
+
+### User logout
+DELETE http://localhost:3000/api/v1/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2MDUsInVzZXJuYW1lIjoidGVzdCIsImVtYWlsIjoidGVzdEBtYWlsLmNvbSIsImlhdCI6MTcwMzc2NTEzMSwiZXhwIjoxNzAzNzY1MTkxfQ.woYd88mc6yak3FZ7vzFYWsSk6A0ZyoJnCNjPYszmBV0
+
+
+### Get refreshToken
+GET http://localhost:3000/api/v1/token

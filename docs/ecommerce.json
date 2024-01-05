@@ -1,0 +1,824 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "E-commerce RESTful API",
+    "version": "1.0.0",
+    "description": "Ini adalah spesifikasi untuk RESTful API yang menyediakan layanan eCommerce. API ini memungkinkan pengguna untuk melakukan berbagai operasi pada toko online, termasuk pengelolaan produk, keranjang belanja, pesanan, pembayaran, dan informasi pengguna.",
+    "contact": {
+      "name": "Moch Dicky Ferdyansyah",
+      "email": "dickyferdy5@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://mit-license.org/"
+    }
+  },
+  "servers": [
+    {
+      "description": "E-commerce RESTful API Server",
+      "url": "https://ecommerce-dickyferdy.vercel.app/api/v1"
+    }
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Register User",
+        "description": "Register new user to api",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "Name for new register",
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "username": {
+                    "description": "Username for new register",
+                    "type": "string",
+                    "minLength": 4
+                  },
+                  "email": {
+                    "description": "Email for new register",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "Password for new register",
+                    "type": "string",
+                    "format": "password",
+                    "minLength": 4
+                  }
+                },
+                "required": [
+                  "name",
+                  "username",
+                  "email",
+                  "password"
+                ]
+              },
+              "examples": {
+                "dicky": {
+                  "description": "Example Register new user Dicky",
+                  "value": {
+                    "name": "dicky",
+                    "username": "dickyferdy",
+                    "email": "dickyferdy@gmail.com",
+                    "password": "rahasia123"
+                  }
+                },
+                "shiro": {
+                  "description": "Example Register new user Shiro",
+                  "value": {
+                    "name": "shiro",
+                    "username": "shiro123",
+                    "email": "shiro@mail.com",
+                    "password": "rahasia789"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success register new user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "dicky": {
+                    "description": "Success register new user Dicky",
+                    "value": {
+                      "data": {
+                        "name": "dicky",
+                        "username": "dickyferdy",
+                        "email": "dickyferdy@gmail.com"
+                      }
+                    }
+                  },
+                  "shiro": {
+                    "description": "Success register new user Shiro",
+                    "value": {
+                      "data": {
+                        "name": "shiro",
+                        "username": "shiro123",
+                        "email": "shiro@mail.com"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed register new user, username minimal length is 4",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed register new user",
+                    "value": {
+                      "error": "Username minimal length is 4 characters"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Failed register new user, username already taken",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed register new user",
+                    "value": {
+                      "error": "Username already taken"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed register new user, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed register new user",
+                    "value": {
+                      "error": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Login User",
+        "description": "Login existing user to api",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "description": "Username for login",
+                    "type": "string",
+                    "minLength": 4
+                  },
+                  "password": {
+                    "description": "Password for login",
+                    "type": "string",
+                    "format": "password",
+                    "minLength": 4
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
+              },
+              "examples": {
+                "dicky": {
+                  "description": "Example login user Dicky",
+                  "value": {
+                    "username": "dickyferdy",
+                    "password": "rahasia123"
+                  }
+                },
+                "shiro": {
+                  "description": "Example login user Shiro",
+                  "value": {
+                    "username": "shiro123",
+                    "password": "rahasia789"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User Successfully login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Success": {
+                    "description": "login success",
+                    "value": {
+                      "data": {
+                        "accessToken": "aubdubahbyuB"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User Failed login, wrong password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed login user, wrong Password",
+                    "value": {
+                      "error": "Invalid Username or Password"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Failed login, username not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed login user, Username not found",
+                    "value": {
+                      "error": "Invalid Username or Password"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "User Failed login, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed login user",
+                    "value": {
+                      "error": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "security": [
+          {
+             "bearerAuth": []
+          }
+       ],
+        "tags": ["User"],
+        "summary": "Get user data",
+        "description": "Get current user data",
+        "responses": {
+          "200": {
+            "description": "Success get all user data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "dicky": {
+                    "description": "Success get all data user Dicky",
+                    "value": {
+                      "data": {
+                        "name": "dicky",
+                        "username": "dickyferdy",
+                        "email": "dickyferdy@gmail.com"
+                      }
+                    }
+                  },
+                  "shiro": {
+                    "description": "Success get all data user Shiro",
+                    "value": {
+                      "data": {
+                        "name": "shiro",
+                        "username": "shiro123",
+                        "email": "shiro@mail.com"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed get all user data, invalid token or token not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "invalid token": {
+                    "description": "Failed get all user data, invalid token",
+                    "value": {
+                      "error": "Unauthorized: Invalid token"
+                    }
+                  },
+                  "token not provided": {
+                    "description": "Failed get all user data, token not provided",
+                    "value": {
+                      "error": "Unauthorized: Token not provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed get all data user, user is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed get all user data",
+                    "value": {
+                      "error": "User is not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed get all user data, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed get all user data",
+                    "value": {
+                      "error": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "security": [
+          {
+             "bearerAuth": []
+          }
+       ],
+        "tags": ["User"],
+        "summary": "Update user data",
+        "description": "Update current user data",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "update name",
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "email": {
+                    "description": "update email",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "update password",
+                    "type": "string",
+                    "format": "password",
+                    "minLength": 4
+                  }
+                }
+              },
+              "examples": {
+                "dicky": {
+                  "description": "Example update user Dicky",
+                  "value": {
+                    "email": "dickyferdy1@gmail.com"
+                  }
+                },
+                "shiro": {
+                  "description": "Example update user Shiro",
+                  "value": {
+                    "password": "shiro789"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success update current user data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user_id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "password": {
+                          "type": "string",
+                          "format": "password"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "dicky": {
+                    "description": "Success update user Dicky",
+                    "value": {
+                      "message": "Update Success",
+                      "data": {
+                        "name": "dicky",
+                        "username": "dickyferdy1",
+                        "email": "dickyferdy1@gmail.com"
+                      }
+                    }
+                  },
+                  "shiro": {
+                    "description": "Success update user Shiro",
+                    "value": {
+                      "message": "Update Success",
+                      "data": {
+                        "name": "shiro",
+                        "username": "shiro123",
+                        "email": "shiro@mail.com"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed update user, password minimal length is 4",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed update user",
+                    "value": {
+                      "error": "Password minimal length is 4 characters"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Failed update user, email is already in use",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed update user",
+                    "value": {
+                      "error": "Email is already in use"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed update user Dicky, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed update user",
+                    "value": {
+                      "error": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/token": {
+      "get": {
+        "tags": ["Token"],
+        "summary": "Get new accessToken",
+        "description": "Get new accessToken for login",
+        "responses": {
+          "200": {
+            "description": "Success get new accessToken",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Success": {
+                    "description": "Success get new accessToken",
+                    "value": {
+                      "data": {
+                        "accessToken": "abdabduabdad"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed get new accessToken, invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "refreshToken not provided": {
+                    "description": "Failed get new accessToken, refreshToken not provided",
+                    "value": {
+                      "error": "Unauthorized: Token not provided"
+                    }
+                  },
+                  "invalid refreshToken": {
+                    "description": "Failed get new accessToken, invalid refreshToken",
+                    "value": {
+                      "error": "Unauthorized: Invalid token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed get new accessToken, user not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed get new accessToken, user is not found",
+                    "value": {
+                      "error": "Unauthorized: User is not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed get new accessToken, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed get new accessToken, server error",
+                    "value": {
+                      "error": "Invalid Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["User"],
+        "summary": "Logout current user",
+        "description": "Logout current user",
+        "responses": {
+          "200": {
+            "description": "Success logout current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Success": {
+                    "description": "Success logout current user",
+                    "value": {
+                      "message": "Logout Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed logout, invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "invalid request": {
+                    "description": "Failed logout, invalid request",
+                    "value": {
+                      "error": "Invalid Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed logout, token not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "refreshToken not provided": {
+                    "description": "Failed logout, token not provided",
+                    "value": {
+                      "error": "Unauthorized: Token not provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed logout current user, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed logout, server error",
+                    "value": {
+                      "error": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
