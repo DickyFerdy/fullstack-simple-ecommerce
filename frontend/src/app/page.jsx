@@ -1,11 +1,12 @@
-
+import Sidebar from "@/components/sidebar/sidebar";
 
 const Home = () => {
   return (
-    <div className="bg-gray-500">
-      <h1>Ini Homepage</h1>
+    <div className="flex h-screen bg-white flex-col md:flex-row md:overflow-hidden">
+      <Sidebar />
+      <h1 className="text-black">Ini Homepage</h1>
     </div>
   )
 }
 
-export default Home
+export default Home;
