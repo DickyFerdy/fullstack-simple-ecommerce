@@ -12,7 +12,7 @@ const getAccessToken = (payload) => {
 }
 
 const getRefreshToken = (payload) => {
-  return jwt.sign(payload, refreshSecretKey, { expiresIn: '1d' });
+  return jwt.sign(payload, refreshSecretKey, { expiresIn: '6h' });
 }
 
 
