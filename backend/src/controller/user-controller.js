@@ -73,6 +73,7 @@ const refreshToken = async (req, res, next) => {
       }
     });
   } catch (error) {
+    res.clearCookie('refreshToken');
     next(error);
   }
 }
