@@ -61,7 +61,7 @@ const Page = () => {
   }, [token]);
 
   return (
-    <div className="flex h-screen bg-white flex-col md:flex-row md:overflow-hidden">
+    <div className="flex h-max md:h-screen bg-white flex-col md:flex-row md:overflow-hidden">
       <Sidebar />
       <div className="flex h-full md:w-full flex-col md:flex-row px-3 py-4 md:px-2">
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">

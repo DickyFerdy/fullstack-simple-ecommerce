@@ -93,14 +93,10 @@ const Page = () => {
             </div>
             <div className="flex flex-col justify-end gap-2">
               <div className="grid gap-2">
-                <button type="submit" className="bg-blue-600 hover:bg-blue-400 text-white text-sm h-9 rounded-md px-6">
-                  <Link href={'/profile/update/information'}>Update Profile</Link>
-                </button>
+                <Link href={'/profile/update/information'} className="flex items-center justify-center bg-blue-600 hover:bg-blue-400 text-white text-sm h-9 rounded-md px-6">Update Profile</Link>
               </div>
               <div className="grid gap-2">
-                <button type="submit" className="bg-blue-600 hover:bg-blue-400 text-white text-sm h-9 rounded-md px-6">
-                  <Link href={'/profile/update/password'}>Update Password</Link>
-                </button>
+                <Link href={'/profile/update/password'} className="flex items-center justify-center bg-blue-600 hover:bg-blue-400 text-white text-sm h-9 rounded-md px-6">Update Password</Link>
               </div>
             </div>
           </div>
