@@ -1,49 +1,44 @@
-"use client";
+'use client';
 
-import axios from "axios";
 import { useEffect, useState } from "react";
-import Sidebar from "@/components/sidebar/sidebar";
-import { refreshToken } from "@/libs/refreshToken";
 import { CircleUserRound } from "lucide-react";
+import { refreshToken } from "@/libs/refreshToken";
 import Link from "next/link";
+import Sidebar from "@/components/sidebar/sidebar";
+import { getUserAPI } from "@/libs/userAPI";
 
 const Page = () => {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState('');
   const [data, setData] = useState({
-    name: "",
-    username: "",
-    email: "",
+    name: '',
+    username: '',
+    email: '',
   });
 
-  const getToken = async () => {
-    const response = await refreshToken();
-    setToken(response);
-  };
-
-  const getUser = async () => {
-    try {
-      const response = await axios.get(`http://localhost:5000/api/v1/users`, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token || ""}`,
-        },
-      });
-      setData({
-        name: response.data.data.name,
-        username: response.data.data.username,
-        email: response.data.data.email,
-      });
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
   useEffect(() => {
+    const getToken = async () => {
+      const response = await refreshToken();
+      setToken(response);
+    };
+
     getToken();
   }, []);
 
   useEffect(() => {
     if (token) {
+      const getUser = async () => {
+        try {
+          const response = await getUserAPI(token);
+          setData({
+            name: response.data.data.name,
+            username: response.data.data.username,
+            email: response.data.data.email,
+          });
+        } catch (err) {
+          console.log(err.message);
+        }
+      };
+      
       getUser();
     }
   }, [token]);

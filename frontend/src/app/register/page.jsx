@@ -1,11 +1,13 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { usePathname, useRouter } from 'next/navigation';
+import { refreshToken } from "@/libs/refreshToken";
+import registerAPI from "@/libs/registerAPI";
 
 const Page = () => {
   const { push } = useRouter();
+  const pathname = usePathname();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -27,12 +29,30 @@ const Page = () => {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:5000/api/v1/register', formData);
+      await registerAPI(formData);
       push('/login');
     } catch (error) {
       setError(error.response.data.error);
     }
   }
+
+  useEffect(() => {
+    const getToken = async () => {
+      try {
+        const token = await refreshToken();
+      
+        if (token) {
+          if (pathname === '/register') {
+            push('/');
+          }
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    
+    getToken();
+  }, []);
 
 
   return (

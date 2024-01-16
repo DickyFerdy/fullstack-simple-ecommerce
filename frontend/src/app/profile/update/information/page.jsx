@@ -1,42 +1,21 @@
-"use client";
+'use client';
 
 import Sidebar from "@/components/sidebar/sidebar";
 import { refreshToken } from "@/libs/refreshToken";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getUserAPI, updateUserAPI } from "@/libs/userAPI";
 
 const Page = () => {
   const { push } = useRouter();
 
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState('');
   const [formData, setFormData] = useState({
-    name: "",
-    username: "",
-    email: ""
+    name: '',
+    username: '',
+    email: ''
   });
-  const [error, setError] = useState("");
-
-  const getToken = async () => {
-    const response = await refreshToken();
-    setToken(response);
-  };
-
-  const getUser = async () => {
-    try {
-      const response = await axios.get(`http://localhost:5000/api/v1/users`, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token || ""}`,
-        },
-      });
-      setFormData({
-        username: response.data.data.username,
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,24 +29,35 @@ const Page = () => {
     e.preventDefault();
 
     try {
-      await axios.patch("http://localhost:5000/api/v1/users", formData, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token || ""}`,
-        },
-      });
-      push("/profile");
+      await updateUserAPI(token, formData);
+      push('/profile');
     } catch (error) {
       setError(error.response.data.error);
     }
   };
 
   useEffect(() => {
+    const getToken = async () => {
+      const response = await refreshToken();
+      setToken(response);
+    };
+
     getToken();
   }, []);
 
   useEffect(() => {
     if (token) {
+      const getUser = async () => {
+        try {
+          const response = await getUserAPI(token);
+          setFormData({
+            username: response.data.data.username,
+          });
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+
       getUser();
     }
   }, [token]);

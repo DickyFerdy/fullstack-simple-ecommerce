@@ -1,12 +1,15 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import { usePathname } from "next/navigation";
+import { refreshToken } from "@/libs/refreshToken";
+import loginAPI from '@/libs/loginAPI';
 
 
 const Page = () => {
   const { push } = useRouter();
+  const pathname = usePathname();
 
   const [formData, setFormData] = useState({
     username: '',
@@ -26,15 +29,30 @@ const Page = () => {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:5000/api/v1/login', formData, {
-        headers: {'Content-Type': 'application/json'},
-        withCredentials: true
-      });
+      await loginAPI(formData);
       push('/');
     } catch (error) {
       setError(error.response?.data.error);
     }
   }
+
+  useEffect(() => {
+    const getToken = async () => {
+      try {
+        const token = await refreshToken();
+      
+        if (token) {
+          if (pathname === '/login') {
+            push('/');
+          }
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    
+    getToken();
+  }, []);
 
 
   return (
