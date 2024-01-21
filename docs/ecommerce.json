@@ -800,6 +800,613 @@
           }
         }
       }
+    },
+    "/users/addresses": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Address"],
+        "summary": "create user address",
+        "description": "create new user address",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "description": "address title",
+                    "type": "string"
+                  },
+                  "street": {
+                    "description": "street for address",
+                    "type": "string"
+                  },
+                  "city": {
+                    "description": "city for address",
+                    "type": "string"
+                  },
+                  "province": {
+                    "description": "province for address",
+                    "type": "string"
+                  },
+                  "country": {
+                    "description": "country for address",
+                    "type": "string"
+                  },
+                  "postal_code": {
+                    "description": "postal code for address",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "street",
+                  "city",
+                  "province",
+                  "country",
+                  "postal_code"
+                ]
+              },
+              "examples": {
+                "dicky": {
+                  "description": "Example create new address user dicky",
+                  "value": {
+                    "title": "Rumah 1",
+                    "street": "jalan 1",
+                    "city": "kota 1",
+                    "province": "provinsi 1",
+                    "country": "Indonesia",
+                    "postal_code": "12345"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success create new user address",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "address_id": {
+                          "type": "integer"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "street": {
+                          "type": "string"
+                        },
+                        "city": {
+                          "type": "string"
+                        },
+                        "province": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string"
+                        },
+                        "postal_code": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "dicky": {
+                    "description": "Success create new address user dicky",
+                    "value": {
+                      "data": {
+                        "address_id": 1,
+                        "title": "Rumah 1",
+                        "street": "jalan 1",
+                        "city": "kota 1",
+                        "province": "provinsi 1",
+                        "country": "Indonesia",
+                        "postal_code": "12345"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed create new address, street cannot be empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed create new address",
+                    "value": {
+                      "error": "Street cannot be empty"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed create new address, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed create new address",
+                    "value": {
+                      "error": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Address"],
+        "summary": "get users addresses",
+        "description": "get all users addresses",
+        "responses": {
+          "200": {
+            "description": "Success get all users addresses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string"
+                          },
+                          "street": {
+                            "type": "string"
+                          },
+                          "city": {
+                            "type": "string"
+                          },
+                          "province": {
+                            "type": "string"
+                          },
+                          "country": {
+                            "type": "string"
+                          },
+                          "postal_code": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "dicky": {
+                    "description": "Success get all users addresses",
+                    "value": {
+                      "data": [
+                        {
+                          "title": "Rumah 1",
+                          "street": "jalan 1",
+                          "city": "kota 1",
+                          "province": "provinsi 1",
+                          "country": "Indonesia",
+                          "postal_code": "12345"
+                        },
+                        {
+                          "title": "Rumah 2",
+                          "street": "jalan 2",
+                          "city": "kota 2",
+                          "province": "provinsi 2",
+                          "country": "Indonesia",
+                          "postal_code": "12346"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed get all users addresses, invalid token or token not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "invalid token": {
+                    "description": "Failed get all users addresses, invalid token",
+                    "value": {
+                      "error": "Unauthorized: Invalid token"
+                    }
+                  },
+                  "token not provided": {
+                    "description": "Failed get all users addresses, token not provided",
+                    "value": {
+                      "error": "Unauthorized: Token not provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed get all users addresses, user is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed get all users addresses",
+                    "value": "User is not found"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed get all users addresses, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed get all users addresses",
+                    "value": {
+                      "error": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/addresses/{addressId}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Address"],
+        "summary": "Get address",
+        "description": "Get address by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AddressId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success get address by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "street": {
+                          "type": "string"
+                        },
+                        "city": {
+                          "type": "string"
+                        },
+                        "province": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string"
+                        },
+                        "postal_code": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Success": {
+                    "description": "Success get address by id",
+                    "value": {
+                      "data": {
+                        "title": "Rumah 1",
+                        "street": "jalan jalan",
+                        "city": "kota 1",
+                        "province": "provinsi 1",
+                        "country": "Indonesia",
+                        "postal_code": "12345"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Address"],
+        "summary": "Update address",
+        "description": "Update users address",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AddressId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "description": "update address title",
+                    "type": "string"
+                  },
+                  "street": {
+                    "description": "update street",
+                    "type": "string"
+                  },
+                  "city": {
+                    "description": "update city",
+                    "type": "string"
+                  },
+                  "province": {
+                    "description": "update province",
+                    "type": "string"
+                  },
+                  "country": {
+                    "description": "update country",
+                    "type": "string"
+                  },
+                  "postal_code": {
+                    "description": "update postal code",
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "dicky": {
+                  "description": "Example update address user dicky",
+                  "value": {
+                    "street": "jalan jalan"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success update users address",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "street": {
+                          "type": "string"
+                        },
+                        "city": {
+                          "type": "string"
+                        },
+                        "province": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string"
+                        },
+                        "postal_code": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "dicky": {
+                    "description": "Success update address user dicky",
+                    "value": {
+                      "message": "Update Success",
+                      "data": {
+                        "street": "jalan jalan",
+                        "city": "kota 1",
+                        "province": "provinsi 1",
+                        "country": "Indonesia",
+                        "postal_code": "12345"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed update address, street cannot be empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed update address",
+                    "value": {
+                      "error": "Street cannot be empty"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed update address, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed update address",
+                    "value": {
+                      "error": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Address"],
+        "summary": "Delete address",
+        "description": "Delete user address by id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AddressId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success delete user address by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Success": {
+                    "description": "Success delete address",
+                    "value": {
+                      "message": "Delete Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed delete, invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed delete, invalid request",
+                    "value": {
+                      "error": "Invalid Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed delete, token not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed delete, token not provided",
+                    "value": {
+                      "error": "Unauthorized: Token not provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed delete, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed delete, server error",
+                    "value": {
+                      "error": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -809,6 +1416,24 @@
         "properties": {
           "error": {
             "type": "string"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "AddressId": {
+        "name": "addressId",
+        "in": "path",
+        "required": true,
+        "description": "Address Id",
+        "schema": {
+          "type": "integer",
+          "minLength": 1
+        },
+        "examples": {
+          "Rumah 1": {
+            "description": "Sample address id for Rumah 1",
+            "value": 1
           }
         }
       }
