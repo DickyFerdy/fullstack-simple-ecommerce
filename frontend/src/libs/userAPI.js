@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const APIBaseUrl = 'http://localhost:5000/api/v1';
+
 const getUserAPI = async (token) => {
-  const response = await axios.get(`http://localhost:5000/api/v1/users`, {
+  const response = await axios.get(`${APIBaseUrl}/users`, {
     withCredentials: true,
     headers: {
       Authorization: `Bearer ${token || ""}`,
@@ -12,7 +14,7 @@ const getUserAPI = async (token) => {
 }
 
 const updateUserAPI = async (token, formData) => {
-  await axios.patch('http://localhost:5000/api/v1/users', formData, {
+  await axios.patch(`${APIBaseUrl}/users`, formData, {
     withCredentials: true,
     headers: {
       Authorization: `Bearer ${token || ""}`,
