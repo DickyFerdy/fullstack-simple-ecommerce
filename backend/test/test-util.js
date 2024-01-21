@@ -41,3 +41,57 @@ export const getTestUser = async () => {
     }
   });
 };
+
+export const removeAllTestAddresses = async () => {
+  return prismaClient.address.deleteMany({
+    where: {
+      user: {
+        username: 'test'
+      }
+    }
+  });
+};
+
+export const createManyTestAddress = async () => {
+  for (let i = 0; i < 10; i++) {
+    const user = await getTestUser();
+
+    await prismaClient.address.create({
+      data: {
+        user_id: user.user_id,
+        title: `rumah ${i}`,
+        street: `jalan ${i}`,
+        city: `kota ${i}`,
+        province: `provinsi ${i}`,
+        country: `Indonesia`,
+        postal_code: `12345${i}`
+      }
+    });
+  };
+};
+
+export const createTestAddress = async () => {
+  const user = await getTestUser();
+
+  return prismaClient.address.create({
+    data: {
+      user_id: user.user_id,
+      title: `rumah 1`,
+      street: `jalan 1`,
+      city: `kota 1`,
+      province: `provinsi 1`,
+      country: `Indonesia`,
+      postal_code: `123451`
+    }
+  });
+};
+
+export const getTestAddress = async () => {
+  return prismaClient.address.findFirst({
+    where: {
+      user: {
+        username: 'test'
+      }
+    }
+  });
+};
