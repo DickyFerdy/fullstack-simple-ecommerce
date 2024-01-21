@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import { usePathname } from "next/navigation";
 import { refreshToken } from "@/libs/refreshToken";
 import loginAPI from '@/libs/loginAPI';
+import Button from "@/components/ui/button";
+import Label from "@/components/ui/label";
+import Input from "@/components/ui/input";
 
 
 const Page = () => {
@@ -41,10 +44,8 @@ const Page = () => {
       try {
         const token = await refreshToken();
       
-        if (token) {
-          if (pathname === '/login') {
-            push('/');
-          }
+        if (token && pathname === '/login') {
+          push('/');
         }
       } catch (error) {
         console.log(error.message);
@@ -56,7 +57,7 @@ const Page = () => {
 
 
   return (
-    <div className="w-full h-max md:h-screen bg-gray-50" >
+    <div className="w-full h-screen bg-gray-50" >
       <main className="flex flex-col justify-center items-center h-full py-10 px-4 sm:px-6 lg:px-8">
         <div className="rounded-lg border bg-[#2d3547] shadow-sm w-full max-w-md mx-auto space-y-6">
           <div className="space-y-1.5 p-4">
@@ -67,34 +68,12 @@ const Page = () => {
           <div className="p-6 pt-0">
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
-                <label
-                  className="text-base text-[#e0e0e0] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  Username
-                </label>
-                <input
-                  className="h-10 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  id="username"
-                  autoComplete="username"
-                  required={true}
-                  type="text"
-                  name="username"
-                  placeholder="username"
-                  onChange={handleChange} />
+                <Label name={"Username"} />
+                <Input id={"username"} type={"text"} name={"username"} placeholder={"johndoe"} onChange={handleChange} />
               </div>
               <div>
-                <label
-                  className="text-base text-[#e0e0e0] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  Password
-                </label>
-                <input
-                  className="h-10 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  id="password"
-                  autoComplete="current-password"
-                  required={true}
-                  type="password"
-                  name="password"
-                  placeholder="password"
-                  onChange={handleChange} />
+                <Label name={"Password"} />
+                <Input id={"password"} type={"password"} name={"password"} placeholder={"password"} onChange={handleChange} />
               </div>
               <div className="text-center text-red-500 text-sm font-medium">
                 {
@@ -102,11 +81,7 @@ const Page = () => {
                 }
               </div>
               <div>
-                <button
-                  className="inline-flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                  type="submit">
-                  Log In
-                </button>
+                <Button name={"Login"} />
               </div>
               <div className="flex items-center justify-center text-base">
                 <p className="font-medium text-[#e0e0e0] mr-1">

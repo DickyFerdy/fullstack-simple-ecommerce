@@ -1,4 +1,4 @@
-import { inter } from '@/components/fonts/fonts';
+import { inter } from '@/components/ui/fonts/fonts';
 import './globals.css'
 
 
