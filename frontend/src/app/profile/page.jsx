@@ -118,7 +118,7 @@ const Page = () => {
                         address.data?.data?.length >= 4 ?
                         null :
                         <div className="hover:scale-125 transition-all">
-                          <Link href={'/profile/address'} title="Add New Address">
+                          <Link href={'/profile/address/create'} title="Add New Address">
                             <Plus size={24}/>
                           </Link>
                         </div>
