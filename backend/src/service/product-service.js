@@ -1,5 +1,5 @@
 import { validate } from "../validation/validation.js";
-import { createProductValidation, productsByCategoryValidation, searchProductValidation } from "../validation/product-validation.js";
+import { categoryNameValidation, createProductValidation, productsByCategoryValidation, searchProductValidation } from "../validation/product-validation.js";
 import { prismaClient } from "../application/database.js"
 import { ResponseError } from "../error/response-error.js";
 
@@ -85,6 +85,7 @@ const search = async (request) => {
 }
 
 const category = async (categoryName, request) => {
+  categoryName = validate(categoryNameValidation, categoryName);
   request = validate(productsByCategoryValidation, request);
 
   // page 1: (page - 1) * size = 0;

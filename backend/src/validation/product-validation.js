@@ -20,8 +20,11 @@ const productsByCategoryValidation = Joi.object({
   size: Joi.number().min(1).positive().default(10)
 });
 
+const categoryNameValidation = Joi.string().required();
+
 export {
   createProductValidation,
   searchProductValidation,
-  productsByCategoryValidation
+  productsByCategoryValidation,
+  categoryNameValidation
 };
