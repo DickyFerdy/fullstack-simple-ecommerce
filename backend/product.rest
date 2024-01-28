@@ -1,0 +1,35 @@
+### login
+POST http://localhost:5000/api/v1/login
+Content-Type: application/json
+
+{
+  "username": "dicky",
+  "password": "rahasia"
+}
+
+
+### create product
+POST http://localhost:5000/api/v1/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2MTQsIm5hbWUiOiJkaWNreSIsInVzZXJuYW1lIjoiZGlja3kiLCJlbWFpbCI6ImRpY2t5QG1haWwuY29tIiwiaWF0IjoxNzA2NDAxNzY4LCJleHAiOjE3MDY0MDUzNjh9.hB9GIQle9shzKuAYraNgWbB3JqZ-U5uls4dmfTrqeL8
+
+{
+  "name": "Adidas 3",
+  "description": "Good Shoes",
+  "price": 10.50,
+  "stock_quantity": 10,
+  "image_path": "http://example-img.jpg",
+  "categories": ["Fashion", "Books"]
+}
+
+
+### get products
+GET http://localhost:5000/api/v1/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2MTQsIm5hbWUiOiJkaWNreSIsInVzZXJuYW1lIjoiZGlja3kiLCJlbWFpbCI6ImRpY2t5QG1haWwuY29tIiwiaWF0IjoxNzA2NDAxNzY4LCJleHAiOjE3MDY0MDUzNjh9.hB9GIQle9shzKuAYraNgWbB3JqZ-U5uls4dmfTrqeL8
+
+
+### get products by category name
+GET http://localhost:5000/api/v1/products/category/Books
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2MTQsIm5hbWUiOiJkaWNreSIsInVzZXJuYW1lIjoiZGlja3kiLCJlbWFpbCI6ImRpY2t5QG1haWwuY29tIiwiaWF0IjoxNzA2NDAxNzY4LCJleHAiOjE3MDY0MDUzNjh9.hB9GIQle9shzKuAYraNgWbB3JqZ-U5uls4dmfTrqeL8
