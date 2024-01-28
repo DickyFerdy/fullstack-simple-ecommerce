@@ -2,6 +2,7 @@ import express from "express";
 import userController from "../controller/user-controller.js";
 import addressController from "../controller/address-controller.js";
 import { authMiddleware } from "../middleware/auth-middleware.js";
+import productController from "../controller/product-controller.js";
 
 
 const userRouter = new express.Router();
@@ -18,6 +19,11 @@ userRouter.get("/api/v1/addresses", addressController.list);
 userRouter.get("/api/v1/addresses/:addressId", addressController.get);
 userRouter.put("/api/v1/addresses/:addressId", addressController.update);
 userRouter.delete("/api/v1/addresses/:addressId", addressController.remove);
+
+// Product API
+userRouter.post("/api/v1/products", productController.create);
+userRouter.get("/api/v1/products", productController.search);
+userRouter.get("/api/v1/products/category/:categoryName", productController.category);
 
 export {
   userRouter
