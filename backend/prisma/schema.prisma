@@ -17,7 +17,8 @@ model User {
   email         String  @db.VarChar(255)
   password      String  @db.VarChar(255)
   refresh_token String? @db.Text
-  address       Address[]
+  addresses     Address[]
+  products      Product[]
 
   @@map("users")
 }
@@ -34,4 +35,38 @@ model Address {
   user_id       Int
 
   @@map("addresses")
+}
+
+model Product {
+  product_id      Int       @id @default(autoincrement())
+  name            String    @db.VarChar(255)
+  description     String    @db.Text
+  price           Decimal   @db.Decimal(10, 2)
+  stock_quantity  Int       @db.Integer
+  image_path      String    @db.VarChar(255)
+  is_active       Boolean   @default(true)
+  created_at      DateTime  @default(now())
+  user            User      @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  user_id         Int
+  categories      ProductCategory[]
+
+  @@map("products")
+}
+
+model Category {
+  category_id   Int     @id @default(autoincrement())
+  name          String  @db.VarChar(100) @unique
+  products      ProductCategory[]
+
+  @@map("categories")
+}
+
+model ProductCategory {
+  product_id    Int
+  category_name String
+  product       Product   @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
+  category      Category  @relation(fields: [category_name], references: [name], onDelete: Cascade)
+
+  @@id([product_id, category_name])
+  @@map("products_categories")
 }
