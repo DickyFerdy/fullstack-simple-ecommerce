@@ -941,6 +941,30 @@
               }
             }
           },
+          "401": {
+            "description": "Failed create addresses, invalid token or token not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "invalid token": {
+                    "description": "Failed create addresses, invalid token",
+                    "value": {
+                      "error": "Unauthorized: Invalid token"
+                    }
+                  },
+                  "token not provided": {
+                    "description": "Failed create, token not provided",
+                    "value": {
+                      "error": "Unauthorized: Token not provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "description": "Failed create new address, server error",
             "content": {
@@ -983,6 +1007,9 @@
                       "items": {
                         "type": "object",
                         "properties": {
+                          "address_id": {
+                            "type": "integer"
+                          },
                           "title": {
                             "type": "string"
                           },
@@ -1007,11 +1034,12 @@
                   }
                 },
                 "examples": {
-                  "dicky": {
+                  "Success": {
                     "description": "Success get all users addresses",
                     "value": {
                       "data": [
                         {
+                          "address_id": 1,
                           "title": "Rumah 1",
                           "street": "jalan 1",
                           "city": "kota 1",
@@ -1020,6 +1048,7 @@
                           "postal_code": "12345"
                         },
                         {
+                          "address_id": 2,
                           "title": "Rumah 2",
                           "street": "jalan 2",
                           "city": "kota 2",
@@ -1053,22 +1082,6 @@
                     "value": {
                       "error": "Unauthorized: Token not provided"
                     }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Failed get all users addresses, user is not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserError"
-                },
-                "examples": {
-                  "Failed": {
-                    "description": "Failed get all users addresses",
-                    "value": "User is not found"
                   }
                 }
               }
@@ -1155,6 +1168,48 @@
                         "country": "Indonesia",
                         "postal_code": "12345"
                       }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed get address, invalid token or token not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "invalid token": {
+                    "description": "Failed get address, invalid token",
+                    "value": {
+                      "error": "Unauthorized: Invalid token"
+                    }
+                  },
+                  "token not provided": {
+                    "description": "Failed get address, token not provided",
+                    "value": {
+                      "error": "Unauthorized: Token not provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed get address, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed get address, server error",
+                    "value": {
+                      "error": "Invalid Server Error"
                     }
                   }
                 }
@@ -1293,6 +1348,28 @@
               }
             }
           },
+          "401": {
+            "description": "Failed update address, invalid token or token not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "invalid token": {
+                    "description": "Failed update address",
+                    "value": {
+                      "error": "Unauthorized: Invalid token"
+                    }
+                  },
+                  "token not provided": {
+                    "description": "Failed update address",
+                    "value": "Unauthorized: Token not provided"
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "description": "Failed update address, server error",
             "content": {
@@ -1370,14 +1447,20 @@
             }
           },
           "401": {
-            "description": "Failed delete, token not provided",
+            "description": "Failed delete, invalid token or token not provided",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UserError"
                 },
                 "examples": {
-                  "Failed": {
+                  "invalid token": {
+                    "description": "Failed delete, invalid token",
+                    "value": {
+                      "error": "Unauthorized: Invalid token"
+                    }
+                  },
+                  "token not provided": {
                     "description": "Failed delete, token not provided",
                     "value": {
                       "error": "Unauthorized: Token not provided"
@@ -1407,6 +1490,544 @@
           }
         }
       }
+    },
+    "/categories": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Category"],
+        "summary": "get all categories",
+        "description": "get all product categories",
+        "responses": {
+          "200": {
+            "description": "Success get all product categories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "category_id": {
+                            "type": "integer"
+                          },
+                          "category_name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Success": {
+                    "description": "Success get all product categories",
+                    "value": {
+                      "data": [
+                        {
+                          "category_id": 1,
+                          "category_name": "Fashion"
+                        },
+                        {
+                          "category_id": 2,
+                          "category_name": "Electronic"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed get all categories, invalid token or token not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "invalid token": {
+                    "description": "Failed get all categories, invalid token",
+                    "value": {
+                      "error": "Unauthorized: Invalid token"
+                    }
+                  },
+                  "token not provided": {
+                    "description": "Failed get all categories, token not provided",
+                    "value": {
+                      "error": "Unauthorized: Token not provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed get all categories, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed get all categories, server error",
+                    "value": {
+                      "error": "Invalid Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Product"],
+        "summary": "create product",
+        "description": "create new product",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "product name",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "product description",
+                    "type": "string"
+                  },
+                  "price": {
+                    "description": "product price",
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "stock_quantity": {
+                    "description": "product quantity",
+                    "type": "integer"
+                  },
+                  "image_path": {
+                    "description": "product image",
+                    "type": "string"
+                  },
+                  "category": {
+                    "description": "product categories",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "description",
+                  "price",
+                  "stock_quantity",
+                  "image_path",
+                  "category"
+                ]
+              },
+              "examples": {
+                "adidas Unisex-Child Pureboost 22 Sneaker": {
+                  "description": "Example create new products",
+                  "value": {
+                    "name": "adidas Unisex-Child Pureboost 22 Sneaker",
+                    "description": "Made with a series of recycled materials, this upper features at least 50% recycled content.",
+                    "price": 55,
+                    "stock_quantity": 100,
+                    "is_active": true,
+                    "image_path": "http://example-image.jpg",
+                    "category": ["Fashion"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success create new product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "product_id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "price": {
+                          "type": "number",
+                          "format": "double"
+                        },
+                        "stock_quantity": {
+                          "type": "integer"
+                        },
+                        "is_active": {
+                          "type": "boolean"
+                        },
+                        "image_path": {
+                          "type": "string"
+                        },
+                        "category": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "adidas Unisex-Child Pureboost 22 Sneaker": {
+                    "description": "Success create new products",
+                    "value": {
+                      "data": {
+                        "name": "adidas Unisex-Child Pureboost 22 Sneaker",
+                        "description": "Made with a series of recycled materials, this upper features at least 50% recycled content.",
+                        "price": 55,
+                        "stock_quantity": 100,
+                        "is_active": true,
+                        "image_path": "http://example-image.jpg",
+                        "category": ["Fashion"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed create new product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed create new product, invalid request",
+                    "value": {
+                      "error": "name cannot be empty"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed create new product, invalid token or token not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "invalid token": {
+                    "description": "Failed create new product, invalid token",
+                    "value": {
+                      "error": "Invalid token"
+                    }
+                  },
+                  "token not provided": {
+                    "description": "Failed create new product, token not provided",
+                    "value": {
+                      "error": "Token not provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed create new product, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed create new product, server error",
+                    "value": {
+                      "error": "Invalid Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Product"],
+        "summary": "get all product",
+        "description": "get all active product",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "description": "search products using product name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "number of page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success get all active products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProducts"
+                },
+                "examples": {
+                  "Success": {
+                    "description": "Success get all active products",
+                    "value": {
+                      "data": [
+                        {
+                          "product_id": 1,
+                          "name": "Adidas Sneaker",
+                          "price": 55,
+                          "image_path": "http://example-image.jpg"
+                        }
+                      ],
+                      "paging": {
+                        "page": 1,
+                        "total_page": 3,
+                        "total_item": 30
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed get all active products, invalid token or token not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "invalid token": {
+                    "description": "Failed get all active products, invalid token",
+                    "value": {
+                      "error": "Unauthorized: Invalid token"
+                    }
+                  },
+                  "token not provided": {
+                    "description": "Failed get all active products, token not provided",
+                    "value": {
+                      "error": "Unauthorized: Token not provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed get all active product, products is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Products is not found",
+                    "value": {
+                      "error": "Products is not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed get all active products, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed get all active products, server error",
+                    "value": {
+                      "error": "Invalid Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/category/{categoryName}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Product", "Category"],
+        "summary": "Get products by category",
+        "description": "Get all active products by category name",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CategoryName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success get all active products by category name",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProducts"
+                },
+                "examples": {
+                  "Success": {
+                    "description": "Success get active all products by category name",
+                    "value": {
+                      "data": [
+                        {
+                          "product_id": 1,
+                          "name": "Adidas Sneaker",
+                          "price": 55,
+                          "image_path": "http://example-image.jpg"
+                        }
+                      ],
+                      "paging": {
+                        "page": 1,
+                        "total_page": 3,
+                        "total_item": 30
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed get all active products, invalid token or not provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "invalid token": {
+                    "description": "Failed get all active products, invalid token",
+                    "value": {
+                      "error": "Unauthorized: Invalid token"
+                    }
+                  },
+                  "token not provided": {
+                    "description": "Failed get all active products, token not provided",
+                    "value": {
+                      "error": "Unauthorized: Token not provided"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed get all active products, products is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed get all active products, product is not found",
+                    "value": {
+                      "error": "Products is not foundss"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed get all active products, server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserError"
+                },
+                "examples": {
+                  "Failed": {
+                    "description": "Failed get all active products, server error",
+                    "value": {
+                      "error": "Invalid Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1416,6 +2037,46 @@
         "properties": {
           "error": {
             "type": "string"
+          }
+        }
+      },
+      "GetProducts": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product_id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "image_path": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "paging": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "integer"
+              },
+              "total_page": {
+                "type": "integer"
+              },
+              "total_item": {
+                "type": "integer"
+              }
+            }
           }
         }
       }
@@ -1434,6 +2095,21 @@
           "Rumah 1": {
             "description": "Sample address id for Rumah 1",
             "value": 1
+          }
+        }
+      },
+      "CategoryName": {
+        "name": "categoryName",
+        "in": "path",
+        "required": true,
+        "description": "Category Name",
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "Fashion": {
+            "description": "Sample category name for Fashion",
+            "value": "Fashion"
           }
         }
       }
