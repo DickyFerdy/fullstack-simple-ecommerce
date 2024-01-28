@@ -95,3 +95,59 @@ export const getTestAddress = async () => {
     }
   });
 };
+
+export const removeAllTestProducts = async () => {
+  return prismaClient.product.deleteMany({
+    where: {
+      user: {
+        username: 'test'
+      }
+    }
+  });
+};
+
+export const createManyTestProducts = async () => {
+  for (let i = 0; i < 15; i++) {
+    const user = await getTestUser();
+    
+    await prismaClient.product.create({
+      data: {
+        user_id: user.user_id,
+        name: `test ${i}`,
+        description: `test ${i}`,
+        price: 10,
+        stock_quantity: 10,
+        image_path: "http://example-img.jpg",
+        categories: {
+          create: [
+            { category_name: 'Fashion' }
+          ]
+        }
+      }
+    });
+  };
+};
+
+export const createManyTestProductsCategories = async () => {
+  const user = await getTestUser();
+
+  return prismaClient.product.create({
+    data: {
+      user_id: user.user_id,
+      name: `test 1`,
+      description: `test 1`,
+      price: 10,
+      stock_quantity: 10,
+      image_path: "http://example-img.jpg",
+      categories: {
+        create: [
+          { category_name: 'Fashion' },
+          { category_name: 'Electronics' },
+          { category_name: 'Books' },
+          { category_name: 'Home' },
+          { category_name: 'Entertainment' }
+        ]
+      }
+    }
+  });
+}
