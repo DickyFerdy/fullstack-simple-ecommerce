@@ -10,7 +10,7 @@ const getUserAPI = async (token) => {
     },
   });
 
-  return response;
+  return response.data.data;
 }
 
 const updateUserAPI = async (token, formData) => {
