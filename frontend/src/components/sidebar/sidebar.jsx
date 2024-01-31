@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { refreshToken } from "@/libs/refreshToken";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import logoutAPI from "@/libs/logoutAPI";
 
 export default function Sidebar() {
   const { push } = useRouter();
@@ -16,23 +17,23 @@ export default function Sidebar() {
   const [token, setToken] = useState('');
 
   const getToken = async () => {
-    const response = await refreshToken();
-    setToken(response);
+    try {
+      const { accessToken } = await refreshToken();
+      setToken(accessToken); 
+    } catch (error) {
+      push('/login');
+      console.log(error.message);
+    }
   }
 
   const handleLogout = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.delete('http://localhost:5000/api/v1/logout', {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      await logoutAPI(token);
       push('/login');
-    } catch (err) {
-      console.log(err.message);
+    } catch (error) {
+      console.log(error.message);
     }
   }
 
