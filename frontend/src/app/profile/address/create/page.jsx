@@ -48,8 +48,13 @@ const Page = () => {
 
   useEffect(() => {
     const getToken = async () => {
-      const response = await refreshToken();
-      setToken(response);
+      try {
+        const { accessToken } = await refreshToken();
+        setToken(accessToken); 
+      } catch (error) {
+        push('/login');
+        console.log(error.message);
+      }
     };
 
     getToken();
