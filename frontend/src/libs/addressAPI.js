@@ -32,7 +32,7 @@ const getAddressByIdAPI = async (token, id) => {
     }
   });
 
-  return response;
+  return response.data.data;
 };
 
 const deleteAddressByIdAPI = async (token, id) => {
