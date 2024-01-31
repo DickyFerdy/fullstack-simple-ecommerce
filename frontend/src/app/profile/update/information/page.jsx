@@ -43,8 +43,13 @@ const Page = () => {
 
   useEffect(() => {
     const getToken = async () => {
-      const response = await refreshToken();
-      setToken(response);
+      try {
+        const { accessToken } = await refreshToken();
+        setToken(accessToken); 
+      } catch (error) {
+        push('/login');
+        console.log(error.message);
+      }
     };
 
     getToken();
@@ -54,10 +59,8 @@ const Page = () => {
     if (token) {
       const getUser = async () => {
         try {
-          const response = await getUserAPI(token);
-          setFormData({
-            username: response.data.data.username,
-          });
+          const { username } = await getUserAPI(token);
+          setFormData({ username });
         } catch (error) {
           console.log(error.message);
         }
