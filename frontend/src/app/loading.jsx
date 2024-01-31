@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const Page = () => {
+const Loading = () => {
   return (
     <div className="flex w-screen h-screen items-center justify-center bg-white">
       <Image src={"/loading.svg"} width='0' height='0' alt="loading" style={{ width: 'auto', height: 'auto' }} />
@@ -8,4 +8,4 @@ const Page = () => {
   )
 }
 
-export default Page;
+export default Loading;
