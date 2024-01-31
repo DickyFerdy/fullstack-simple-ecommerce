@@ -42,9 +42,9 @@ const Page = () => {
   useEffect(() => {
     const getToken = async () => {
       try {
-        const token = await refreshToken();
+        const { accessToken } = await refreshToken();
       
-        if (token && pathname === '/login') {
+        if (accessToken && pathname === '/login') {
           push('/');
         }
       } catch (error) {
