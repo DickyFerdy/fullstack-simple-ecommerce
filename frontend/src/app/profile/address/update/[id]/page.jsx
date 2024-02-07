@@ -6,7 +6,6 @@ import { refreshToken } from "@/libs/refreshToken";
 import { updateAddressByIdAPI, getAddressByIdAPI,  } from "@/libs/addressAPI";
 import Loading from "@/app/loading";
 import Update from "@/components/address/update";
-import delay from "@/utils/delay";
 
 
 const Page = ({ params: { id } }) => {
@@ -70,6 +69,9 @@ const Page = ({ params: { id } }) => {
           const { title, street, city, province, country, postal_code } = await getAddressByIdAPI(token, id);
           setAddress({ title, street, city, province, country, postal_code });
         } catch (error) {
+          if (error.response.status === 404) {
+            setError('"Address" is not found')
+          }
           console.log(error.message);
         }
       };
@@ -80,7 +82,7 @@ const Page = ({ params: { id } }) => {
 
   return (
     <Suspense fallback={<Loading />}>
-      {delay(<Update address={address} handleChange={handleChange} handleSubmit={handleSubmit} error={error} />, 100)}
+      <Update address={address} handleChange={handleChange} handleSubmit={handleSubmit} error={error} />
     </Suspense>
   )
 }
