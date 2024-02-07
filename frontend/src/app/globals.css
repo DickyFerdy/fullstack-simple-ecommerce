@@ -25,3 +25,15 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.custom-class > *[data-ut-element="button"] {
+  width: 100%;
+  height: 30px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.custom-class > *[data-ut-element="button"][data-state="uploading"] {
+  background-color: rgb(59 130 246);
+  cursor: not-allowed;
+}
