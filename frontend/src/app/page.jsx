@@ -1,12 +1,51 @@
-import Sidebar from "@/components/sidebar/sidebar";
+'use client';
 
-const Home = () => {
+import Home from "@/components/home";
+import { refreshToken } from "@/libs/refreshToken";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { getAllProductsAPI } from "@/libs/productsAPI";
+
+
+
+const Page = () => {
+  const { push } = useRouter();
+  const [token, setToken] = useState('');
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    const getToken = async () => {
+      try {
+        const { accessToken } = await refreshToken();
+        setToken(accessToken);
+      } catch (error) {
+        push('/login');
+        console.log(error.message);
+      }
+    };
+
+    getToken();
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      const getProduct = async () => {
+        try {
+          const response = await getAllProductsAPI(token);
+          setProduct(response);
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+
+      getProduct();
+    }
+  }, [token]);
+
+
   return (
-    <div className="flex h-screen bg-white flex-col md:flex-row md:overflow-hidden">
-      <Sidebar />
-      <h1 className="text-black md:ml-64">Ini Homepage</h1>
-    </div>
+    <Home product={product} />
   )
 }
 
-export default Home;
+export default Page;
