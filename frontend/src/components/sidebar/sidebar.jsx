@@ -1,8 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import axios from "axios";
-import { Cat, Home, LogOut, User } from "lucide-react";
+import { Cat, Blocks, LogOut, User, ShoppingBasket } from "lucide-react";
 import { lato } from "@/components/ui/fonts/fonts";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -10,6 +9,7 @@ import { refreshToken } from "@/libs/refreshToken";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import logoutAPI from "@/libs/logoutAPI";
+
 
 export default function Sidebar() {
   const { push } = useRouter();
@@ -61,18 +61,6 @@ export default function Sidebar() {
         </Link>
         <div className="flex grow text-gray-700 flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
           <Link
-            href={"/"} title="Home"
-            className={clsx(
-              "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-base font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
-              {
-                'bg-sky-100 text-blue-600': pathname === '/'
-              }
-            )}
-          >
-            <Home className="w-6" />
-            <p className="hidden md:block">Home</p>
-          </Link>
-          <Link
             href={"/profile"} title="Profile"
             className={clsx(
               "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-base font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
@@ -83,6 +71,30 @@ export default function Sidebar() {
           >
             <User className="w-6" />
             <p className="hidden md:block">Profile</p>
+          </Link>
+          <Link
+            href={"/categories"} title="Categories"
+            className={clsx(
+              "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-base font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
+              {
+                'bg-sky-100 text-blue-600': pathname.includes('/categories')
+              }
+            )}
+          >
+            <Blocks className="w-6" />
+            <p className="hidden md:block">Categories</p>
+          </Link>
+          <Link
+            href={"/product"} title="My Product"
+            className={clsx(
+              "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-base font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
+              {
+                'bg-sky-100 text-blue-600': pathname === '/product'
+              }
+            )}
+          >
+            <ShoppingBasket className="w-6" />
+            <p className="hidden md:block">My Product</p>
           </Link>
           <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
           <form onSubmit={handleLogout}>
