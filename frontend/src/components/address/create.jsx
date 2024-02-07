@@ -1,14 +1,12 @@
-'use client';
-
+import Sidebar from "@/components/sidebar/sidebar";
 import MainTitle from "@/components/ui/title/mainTitle";
 import ContentTitle from "@/components/ui/title/contentTitle";
 import Button from "@/components/ui/button";
 import Input from "@/components/ui/input";
 import TextArea from "@/components/ui/textarea";
-import Sidebar from "@/components/sidebar/sidebar";
 
 
-const Update = ({ address, handleChange, handleSubmit, error }) => {
+const Create = ({ address, handleSubmit, handleChange, error }) => {
   return (
     <div className="flex h-max md:h-screen bg-white flex-col md:flex-row md:overflow-hidden">
       <Sidebar />
@@ -18,40 +16,40 @@ const Update = ({ address, handleChange, handleSubmit, error }) => {
           <div className="flex flex-col md:grid md:grid-cols-6 gap-6">
             <div className="md:col-span-4 lg:col-span-3 xl:col-span-4 flex flex-col gap-6">
               <div className="rounded-lg text-slate-700 border border-slate-300 shadow-sm">
-                <ContentTitle title={"Update Shipping Address"} />
+                <ContentTitle title={"Create Shipping Address"} />
                 <div className="p-6 pt-0">
                   <form className="grid gap-4">
                     <div className="grid gap-2">
-                      <Input id={"title"} type={"text"} name={"title"} placeholder={`Title.. (${address.title})`} onChange={handleChange} />
+                      <Input id={"title"} type={"text"} name={"title"} placeholder={"Title.. (e.g. House 1)"} onChange={handleChange} />
                     </div>
                     <div className="grid gap-2">
-                      <TextArea id={"street"} name={"street"} placeholder={`Street.. (${address.street})`} onChange={handleChange} />
+                      <TextArea id={"street"} name={"street"} placeholder={"Street.. (e.g. Main Street 10)"} onChange={handleChange} />
                     </div>
                     <div className="grid gap-2">
-                      <Input id={"city"} type={"text"} name={"city"} placeholder={`City.. (${address.city})`} onChange={handleChange} />
+                      <Input id={"city"} type={"text"} name={"city"} placeholder={"City.. (e.g. New York)"} onChange={handleChange} />
                     </div>
                     <div className="grid gap-2">
-                      <Input id={"province"} type={"text"} name={"province"} placeholder={`State/Province.. (${address.province})`} onChange={handleChange} />
+                      <Input id={"province"} type={"text"} name={"province"} placeholder={"State/Province.. (e.g. New York)"} onChange={handleChange} />
                     </div>
                     <div className="grid gap-2">
-                      <Input id={"country"} type={"text"} name={"country"} placeholder={`Country.. (${address.country})`} onChange={handleChange} />
+                      <Input id={"country"} type={"text"} name={"country"} placeholder={"Country.. (e.g. United States)"} onChange={handleChange} />
                     </div>
                     <div className="grid gap-2">
-                      <Input id={"postal_code"} type={"number"} name={"postal_code"} placeholder={`Postal code.. (${address.postal_code})`} onChange={handleChange} />
+                      <Input id={"postal_code"} type={"number"} name={"postal_code"} placeholder={"Postal code.. (e.g. 12345)"} onChange={handleChange} />
                     </div>
                     <div className="text-center text-red-500 text-sm font-medium">
-                      {error ? (
-                        <p>{error}</p>
-                      ) : (
-                        null
-                      )}
+                      { error ? (
+                          <p>{error}</p>
+                        ) : address.data?.data?.length >= 4 ? (
+                          <p>You cannot add a new address. Please change or delete an existing one.</p>
+                        ) : null
+                      }
                     </div>
                     <div>
-                      { error === '"Address" is not found' ? (
-                        <Button name={"Submit"} handle={handleSubmit} disabled={true} />
-                      ) : (
+                      { address.data?.data?.length >= 4 ?
+                        <Button name={"Submit"} handle={handleSubmit} disabled={true} /> :
                         <Button name={"Submit"} handle={handleSubmit} />
-                      )}
+                      }
                     </div>
                   </form>
                 </div>
@@ -64,4 +62,4 @@ const Update = ({ address, handleChange, handleSubmit, error }) => {
   )
 }
 
-export default Update;
+export default Create;
